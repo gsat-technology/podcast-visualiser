@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import SearchBar from './SearchBar'
-import { searchTermUpdated } from '../actions/search'
+import { searchTermUpdated, itemSelected } from '../actions/search'
 
 
-const Search = ({ searchTermUpdated, results }) => {
+const Search = ({ searchTermUpdated, itemSelected, results }) => {
 
     const collectionNames = results.map((item) => item.collectionName)
 
@@ -12,12 +12,14 @@ const Search = ({ searchTermUpdated, results }) => {
         <SearchBar 
           data={collectionNames} 
           onUpdateInput={(searchTerm) => searchTermUpdated(searchTerm)}
+          onItemSelected={(selectedItem) => itemSelected(selectedItem)}
         />
     )
 }
 
 const mapDispatchToProps = dispatch => ({
     searchTermUpdated: (searchTerm) => dispatch(searchTermUpdated(searchTerm)),
+    itemSelected: (selectedItem) => dispatch(itemSelected(selectedItem))
 })
 
 const mapStateToProps = state => ({

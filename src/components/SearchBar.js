@@ -13,14 +13,13 @@ export default class SearchBar extends Component {
     this.setState({
       searchText: searchText,
     })
-  
+
     this.props.onUpdateInput(searchText)
   }
 
-  handleNewRequest = () => {
-    this.setState({
-      searchText: '',
-    })
+  handleNewRequest = (chosenRequest) => {
+    console.log('handle new request')
+    this.props.onItemSelected(chosenRequest)
   }
 
   render() {
