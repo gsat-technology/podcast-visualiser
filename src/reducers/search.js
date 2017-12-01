@@ -2,7 +2,6 @@ import { constants } from '../actions/search'
 
 const initialState = {
     results: [],
-    podcast: {},
     rss: {}
 }
 
@@ -13,15 +12,15 @@ export default function search (state = initialState, action) {
               ...state,
               results: action.results
           }
-        case constants.SET_ITEM_SELECTED:
-          return {
-              ...state,
-              podcast: action.podcast
-          }
         case constants.SET_RSS:
           return {
               ...state,
               rss: action.rss
+          }
+        case constants.SET_PODCAST_SELECTED:
+          return {
+              ...state,
+              podcast: action.podcast
           }
         default:
           return state

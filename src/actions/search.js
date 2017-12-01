@@ -7,8 +7,8 @@ import feedme from 'feedme'
 export const constants = {
     NOTHING: 'NOTHING',
     UPDATE_SEARCH_RESULTS: 'UPDATE_SEARCH_RESULTS',
-    SET_ITEM_SELECTED: 'SET_ITEM_SELECTED',
-    SET_RSS: 'SET_RSS'
+    SET_PODCAST_SELECTED: 'SET_PODCAST_SELECTED',
+    SET_PODCAST_DETAIL: 'SET_PODCAST_DETAIL'
 }
 
 const nothing = (text) => ({
@@ -39,14 +39,15 @@ export const searchTermUpdated = (searchTerm) => (dispatch, getState) => {
     })
 }
 
-const setItemSelected = podcast => ({
-    type: constants.SET_ITEM_SELECTED,
+const setPodcastSelected = podcast => ({
+    type: constants.SET_PODCAST_SELECTED,
     podcast
 })
 
-const setRSS = rss => ({
-    type: constants.SET_RSS,
-    rss
+
+const setPodcastDetail = podcastDetail => ({
+    type: constants.SET_PODCAST_DETAIL,
+    podcastDetail
 })
 
 export const itemSelected = (selectedItem) => (dispatch, getState) => {
@@ -54,14 +55,14 @@ export const itemSelected = (selectedItem) => (dispatch, getState) => {
     const { search } = getState()
 
     const podcast = search.results.find(item => item.trackName === selectedItem)
-    
-    dispatch(setItemSelected(podcast))
+
+    dispatch(setPodcastSelected(podcast))
 
     http.get(podcast.feedUrl, (res) => {
         var parser = new feedme(true);
         res.pipe(parser);
         parser.on('end', () => {
-          dispatch(setRSS(parser.done()))
+          dispatch(setPodcastDetail(parser.done()))
         });
       });
 }
