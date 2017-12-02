@@ -1,16 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Chart } from 'react-google-charts'
-
-
-const convertDuration = duration => {
-  const split = duration.split(':')
-
-  let mins = 0
-  mins += parseInt(split[0]) * 60
-  mins += parseInt(split[1])
-  return mins
-}
+import PodcastTooltip from './PodcastTooltip'
+import { convertDurationToSeconds, convertSecondsToDuration } from '../utils/index'
+import { renderToString } from 'react-dom/server'
 
 const styles = {
   tooltip: {
@@ -56,21 +49,21 @@ const PodcastChart = ({ podcast }) => {
     tooltip: {isHtml: true}
   }
 
-  const podcastDetailsHTML = podcastItem => {
-    return (
-      `<div>` +
-        `<span>length: ${podcastItem['itunes:duration']}</span>` +
-      `</div>`
-    )
-  }
+  let accumulativeSeconds = 0
 
   podcast.items.forEach((item, index) => {
 
+    const itemSeconds = convertDurationToSeconds(item['itunes:duration'])
+    accumulativeSeconds += itemSeconds
+
     data.push(
       [ index,
-        convertDuration(item['itunes:duration']),
+        itemSeconds,
         'stroke-color: #00bcd4; stroke-width: 2;',
-        podcastDetailsHTML(item)
+        renderToString(<PodcastTooltip 
+          podcastItem={item} 
+          duration={convertSecondsToDuration(accumulativeSeconds)}  
+        />)
       ]
     )
   })

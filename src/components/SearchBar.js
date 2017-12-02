@@ -26,7 +26,7 @@ export default class SearchBar extends Component {
     return (
       <div>
         <AutoComplete
-          hintText="Search for podcast"
+          hintText="Search for podcast e.g. 'History of Byzantium'"
           searchText={this.state.searchText}
           onUpdateInput={this.handleUpdateInput}
           onNewRequest={this.handleNewRequest}
