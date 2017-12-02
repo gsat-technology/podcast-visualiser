@@ -12,11 +12,19 @@ const convertDuration = duration => {
   return mins
 }
 
+const styles = {
+  tooltip: {
+    width: '200px',
+    height: '200px'
+  }
+}
+
 const PodcastChart = ({ podcast }) => {
   
   if (podcast.items === undefined) {
     return (
-      <div></div>
+      <div>
+      </div>
     )
   }
 
@@ -45,22 +53,30 @@ const PodcastChart = ({ podcast }) => {
     },
     legend: 'none',
     backgroundColor: { fill:'transparent' },
-    is3D: true,
     tooltip: {isHtml: true}
   }
 
+  const podcastDetailsHTML = podcastItem => {
+    return (
+      `<div>` +
+        `<span>length: ${podcastItem['itunes:duration']}</span>` +
+      `</div>`
+    )
+  }
+
   podcast.items.forEach((item, index) => {
+
     data.push(
       [ index,
         convertDuration(item['itunes:duration']),
         'stroke-color: #00bcd4; stroke-width: 2;',
-        '<p></p>'
+        podcastDetailsHTML(item)
       ]
     )
   })
 
   return (
-    <div className={'my-pretty-chart-container'}>
+    <div>
       <Chart
           chartType="ColumnChart"
           data={data}
