@@ -1,9 +1,12 @@
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 module.exports = {
   entry: [
     './src/index.js'
   ],
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, './docs'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -22,5 +25,10 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: './'
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      {from: './index.html', to: ''}
+    ])
+  ]
 };
