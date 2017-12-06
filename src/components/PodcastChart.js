@@ -51,7 +51,7 @@ const PodcastChart = ({ podcast }) => {
 
   let accumulativeSeconds = 0
 
-  podcast.items.forEach((item, index) => {
+  podcast.items.reverse().forEach((item, index) => {
 
     const itemSeconds = convertDurationToSeconds(item['itunes:duration'])
     accumulativeSeconds += itemSeconds

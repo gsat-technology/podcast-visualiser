@@ -25319,7 +25319,7 @@
 	
 	  var accumulativeSeconds = 0;
 	
-	  podcast.items.forEach(function (item, index) {
+	  podcast.items.reverse().forEach(function (item, index) {
 	
 	    var itemSeconds = (0, _index.convertDurationToSeconds)(item['itunes:duration']);
 	    accumulativeSeconds += itemSeconds;
@@ -25373,7 +25373,7 @@
 	
 	var styles = {
 	    outer: {
-	        width: '200px',
+	        width: '300px',
 	        height: '100%',
 	        padding: '10px 5px 10px 5px'
 	    }
@@ -25387,6 +25387,16 @@
 	    return _react2.default.createElement(
 	        'div',
 	        { style: styles.outer },
+	        _react2.default.createElement(
+	            'h5',
+	            null,
+	            podcastItem.title
+	        ),
+	        _react2.default.createElement(
+	            'h6',
+	            null,
+	            podcastItem['itunes:subtitle']
+	        ),
 	        _react2.default.createElement(
 	            'span',
 	            null,
